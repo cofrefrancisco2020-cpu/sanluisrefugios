@@ -73,8 +73,8 @@ nav.scrolled{background:rgba(13,13,11,0.95);backdrop-filter:blur(20px);border-bo
 .stat{border-left:1px solid var(--border);padding-left:1.2rem}
 .stat-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:var(--bronze-light)}
 .stat-label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
-.overview-img{position:relative}
-.overview-img img{width:100%;height:500px;object-fit:cover;display:block}
+.overview-img{position:relative;overflow:hidden}
+.overview-img img{width:100%;height:500px;object-fit:cover;object-position:center center;display:block}
 .overview-img::before{content:'';position:absolute;top:-20px;left:-20px;right:20px;bottom:20px;border:1px solid var(--border);z-index:-1}
 
 /* ─── REFUGIOS ─── */
@@ -110,10 +110,15 @@ nav.scrolled{background:rgba(13,13,11,0.95);backdrop-filter:blur(20px);border-bo
 /* ─── GALERÍA ─── */
 #galeria{background:var(--dark2);padding:7rem 4rem}
 .galeria-header{text-align:center;max-width:600px;margin:0 auto 4rem}
-.gallery-masonry{max-width:1300px;margin:0 auto;columns:3;column-gap:3px}
-.gallery-item{break-inside:avoid;margin-bottom:3px;overflow:hidden;cursor:pointer}
-.gallery-item img{width:100%;display:block;transition:transform .6s ease;filter:brightness(.9)}
+.gallery-grid{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto;gap:3px}
+.gallery-item{overflow:hidden;cursor:pointer;position:relative}
+.gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease;filter:brightness(.9)}
 .gallery-item:hover img{transform:scale(1.04);filter:brightness(1)}
+/* featured items that span more space */
+.gallery-item.tall img{height:420px}
+.gallery-item.normal img{height:260px}
+.gallery-item.wide{grid-column:span 2}
+.gallery-item.wide img{height:260px}
 
 /* ─── LIGHTBOX ─── */
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;display:none;align-items:center;justify-content:center}
@@ -227,6 +232,10 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:3rem 4r
   .detail-content{position:static}
   .ubicacion-grid{grid-template-columns:1fr}
   footer{grid-template-columns:1fr;gap:2rem}
+  /* Galería: 2 columnas en tablet */
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-item.tall img{height:300px}
+  .gallery-item.wide{grid-column:span 2}
 }
 @media(max-width:768px){
   nav{padding:0 1.5rem}
@@ -235,13 +244,37 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:3rem 4r
   .hero-content{padding:0 1.5rem}
   #overview,#refugios,#galeria,#tour,#reservas,#ubicacion,#contacto,footer{padding-left:1.5rem;padding-right:1.5rem}
   .refugio-detail{padding:4rem 1.5rem}
-  .gallery-masonry{columns:2}
+  /* Galería: 2 columnas en móvil */
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-item.tall img{height:220px}
+  .gallery-item.normal img{height:180px}
+  .gallery-item.wide{grid-column:span 2}
+  .gallery-item.wide img{height:200px}
   .form-grid{grid-template-columns:1fr}
   .footer-links{grid-template-columns:1fr}
   .footer-bottom{flex-direction:column;gap:.5rem;text-align:center}
+  /* Refugio 1 móvil: fotos proporcionales, sillón destacado */
+  #r1 .detail-grid{display:flex;flex-direction:column}
+  #r1 .detail-content{order:1}
+  #r1 .detail-gallery{order:2;display:flex;flex-direction:column;gap:3px}
+  #r1 .detail-gallery img:first-child{grid-column:unset;height:260px;width:100%;object-fit:cover}
+  #r1 .detail-gallery img:not(:first-child){height:200px;width:100%;object-fit:cover}
+  /* Reordenar galería Refugio 1: sillón (galeria-3) primero y más grande, tinaja (galeria-1) después más pequeña */
+  #r1 .detail-gallery{display:flex;flex-direction:column;gap:6px}
+  #r1 .detail-gallery img[alt="Sillón y alfombra Refugio 1"]{order:1;height:280px}
+  #r1 .detail-gallery img[alt="Living TV Refugio 1"]{order:2;height:200px}
+  #r1 .detail-gallery img[alt="Tinaja Exterior Refugio 1"]{order:3;height:180px}
+  /* Refugio 2 móvil: info primero, fotos después */
+  #r2 .detail-grid{display:flex;flex-direction:column}
+  #r2 .detail-content{order:1}
+  #r2 .detail-gallery{order:2;display:flex;flex-direction:column;gap:3px}
+  #r2 .detail-gallery img{width:100%;object-fit:cover;height:220px}
+  #r2 .detail-gallery img:first-child{height:260px}
 }
 @media(max-width:480px){
-  .gallery-masonry{columns:1}
+  .gallery-grid{grid-template-columns:1fr}
+  .gallery-item.tall img,.gallery-item.normal img,.gallery-item.wide img{height:220px}
+  .gallery-item.wide{grid-column:span 1}
   .refugio-card img{height:400px}
   .hero-title{font-size:2.6rem}
 }
@@ -447,35 +480,35 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:3rem 4r
     <p class="section-label">Galería</p>
     <h2 class="section-title">Cada rincón,<br>una <em>experiencia</em></h2>
   </div>
-  <div class="gallery-masonry">
-    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-1.jpg')">
-      <img src="imagenes/galeria-1.jpg" alt="Tinaja exterior">
-    </div>
-    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-2.jpg')">
-      <img src="imagenes/galeria-2.jpg" alt="Exterior refugio">
-    </div>
-    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-3.jpg')">
+  <div class="gallery-grid">
+    <div class="gallery-item tall" onclick="openLightbox('imagenes/galeria-3.jpg')">
       <img src="imagenes/galeria-3.jpg" alt="Sillón y alfombra">
     </div>
-    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-4.jpg')">
-      <img src="imagenes/galeria-4.jpg" alt="TV y mármol living">
+    <div class="gallery-item normal" onclick="openLightbox('imagenes/galeria-2.jpg')">
+      <img src="imagenes/galeria-2.jpg" alt="Exterior refugio">
     </div>
-    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-5.jpg')">
-      <img src="imagenes/galeria-5.jpg" alt="Detalle sillón">
-    </div>
-    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-6.jpg')">
-      <img src="imagenes/galeria-6.jpg" alt="Living comedor Refugio 2">
-    </div>
-    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-7.jpg')">
-      <img src="imagenes/galeria-7.jpg" alt="Ski room Refugio 2">
-    </div>
-    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-8.jpg')">
+    <div class="gallery-item normal" onclick="openLightbox('imagenes/galeria-8.jpg')">
       <img src="imagenes/galeria-8.jpg" alt="Espejo habitación">
     </div>
-    <div class="gallery-item" onclick="openLightbox('imagenes/refugio-2-cama.jpg')">
+    <div class="gallery-item normal" onclick="openLightbox('imagenes/galeria-6.jpg')">
+      <img src="imagenes/galeria-6.jpg" alt="Living comedor Refugio 2">
+    </div>
+    <div class="gallery-item wide" onclick="openLightbox('imagenes/galeria-1.jpg')">
+      <img src="imagenes/galeria-1.jpg" alt="Tinaja exterior">
+    </div>
+    <div class="gallery-item normal" onclick="openLightbox('imagenes/galeria-4.jpg')">
+      <img src="imagenes/galeria-4.jpg" alt="TV y mármol living">
+    </div>
+    <div class="gallery-item normal" onclick="openLightbox('imagenes/galeria-5.jpg')">
+      <img src="imagenes/galeria-5.jpg" alt="Detalle sillón">
+    </div>
+    <div class="gallery-item normal" onclick="openLightbox('imagenes/galeria-7.jpg')">
+      <img src="imagenes/galeria-7.jpg" alt="Ski room Refugio 2">
+    </div>
+    <div class="gallery-item normal" onclick="openLightbox('imagenes/refugio-2-cama.jpg')">
       <img src="imagenes/refugio-2-cama.jpg" alt="Habitación cama Refugio 2">
     </div>
-    <div class="gallery-item" onclick="openLightbox('imagenes/refugio-2-camarotes.jpg')">
+    <div class="gallery-item normal" onclick="openLightbox('imagenes/refugio-2-camarotes.jpg')">
       <img src="imagenes/refugio-2-camarotes.jpg" alt="Camarotes Refugio 2">
     </div>
   </div>
@@ -637,7 +670,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:3rem 4r
     </div>
     <div class="map-placeholder reveal" style="position:relative;overflow:hidden;">
       <iframe
-        src="https://maps.google.com/maps?q=-38.6583,-71.5167&z=15&output=embed"
+        src="https://maps.google.com/maps?q=-38.6583,-71.5167&z=16&t=k&markers=-38.6583,-71.5167&output=embed"
         width="100%" height="100%" style="border:0;min-height:400px;filter:grayscale(1) contrast(.8)"
         allowfullscreen="" loading="lazy">
       </iframe>
