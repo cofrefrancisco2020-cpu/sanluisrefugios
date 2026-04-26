@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refugios San Luis – Montaña, Naturaleza y Exclusividad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark: #0d0d0b;
+  --dark2: #161612;
+  --bronze: #c49a5e;
+  --bronze-light: #e0b87a;
+  --cream: #f5f0e8;
+  --warm: #2a2520;
+  --text: #e8e0d0;
+  --muted: #9a8f7e;
+  --border: rgba(196,154,94,0.2);
+  --nav-h: 80px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--dark);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--dark)}
+::-webkit-scrollbar-thumb{background:var(--bronze)}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 3rem;transition:all .4s ease}
+nav.scrolled{background:rgba(13,13,11,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo img{height:52px;filter:brightness(1.1)}
+.nav-links{display:flex;gap:2.5rem;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;font-weight:400;transition:color .3s}
+.nav-links a:hover{color:var(--bronze)}
+.nav-cta{background:var(--bronze);color:var(--dark)!important;padding:.55rem 1.4rem;letter-spacing:.1em;font-weight:500;transition:all .3s!important}
+.nav-cta:hover{background:var(--bronze-light)!important;color:var(--dark)!important}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px}
+.nav-hamburger span{display:block;width:24px;height:1.5px;background:var(--bronze);transition:all .3s}
+
+/* ─── HERO ─── */
+#hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-image:url('imagenes/hero.jpg');background-size:cover;background-position:center 30%;transform:scale(1.05);animation:heroZoom 12s ease-out forwards}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(13,13,11,.65) 0%,rgba(13,13,11,.3) 50%,rgba(13,13,11,.7) 100%)}
+.hero-content{position:relative;z-index:2;max-width:720px;padding:0 4rem;animation:heroFade .8s ease both}
+.hero-eyebrow{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--bronze);margin-bottom:1.2rem;opacity:0;animation:fadeUp .8s .3s ease forwards}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:300;line-height:1.05;color:#fff;margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .5s ease forwards}
+.hero-title em{font-style:italic;color:var(--bronze-light)}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.65);max-width:420px;line-height:1.7;margin-bottom:2.8rem;font-weight:300;opacity:0;animation:fadeUp .8s .7s ease forwards}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .9s ease forwards}
+.btn-primary{background:var(--bronze);color:var(--dark);padding:.85rem 2rem;font-family:'Jost',sans-serif;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;font-weight:500;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.6rem;transition:all .3s}
+.btn-primary:hover{background:var(--bronze-light);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:#fff;padding:.85rem 2rem;font-family:'Jost',sans-serif;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;font-weight:400;border:1px solid rgba(255,255,255,.3);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.6rem;transition:all .3s}
+.btn-outline:hover{border-color:var(--bronze);color:var(--bronze);transform:translateY(-2px)}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadeUp .8s 1.2s ease forwards}
+.hero-scroll span{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--bronze),transparent);animation:scrollPulse 2s ease infinite}
+
+/* ─── SECTION HEADERS ─── */
+.section-label{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--bronze);margin-bottom:.8rem}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;line-height:1.15;margin-bottom:1.5rem}
+.section-title em{font-style:italic;color:var(--bronze)}
+.divider{width:60px;height:1px;background:var(--bronze);margin-bottom:2rem}
+
+/* ─── OVERVIEW ─── */
+#overview{padding:8rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;max-width:1300px;margin:0 auto}
+.overview-text p{color:var(--muted);line-height:1.85;font-size:.95rem;margin-bottom:1rem}
+.overview-stats{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2.5rem}
+.stat{border-left:1px solid var(--border);padding-left:1.2rem}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:var(--bronze-light)}
+.stat-label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
+.overview-img{position:relative}
+.overview-img img{width:100%;height:500px;object-fit:cover;display:block}
+.overview-img::before{content:'';position:absolute;top:-20px;left:-20px;right:20px;bottom:20px;border:1px solid var(--border);z-index:-1}
+
+/* ─── REFUGIOS ─── */
+#refugios{background:var(--dark2);padding:7rem 4rem}
+.refugios-header{text-align:center;max-width:600px;margin:0 auto 5rem}
+.refugios-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;max-width:1300px;margin:0 auto}
+.refugio-card{position:relative;overflow:hidden;cursor:pointer}
+.refugio-card img{width:100%;height:560px;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.25,.46,.45,.94)}
+.refugio-card:hover img{transform:scale(1.06)}
+.refugio-info{position:absolute;bottom:0;left:0;right:0;padding:3rem 2.5rem;background:linear-gradient(to top,rgba(13,13,11,.95) 0%,transparent 100%)}
+.refugio-tag{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--bronze);margin-bottom:.5rem}
+.refugio-name{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:#fff;margin-bottom:.5rem}
+.refugio-cap{font-size:.8rem;color:var(--muted);margin-bottom:1.2rem}
+.refugio-features{display:flex;flex-wrap:wrap;gap:.5rem}
+.feat-tag{font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.15);padding:.25rem .7rem}
+
+/* ─── DETAIL PANELS ─── */
+.refugio-detail{padding:7rem 4rem;max-width:1300px;margin:0 auto}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.detail-gallery{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.detail-gallery img{width:100%;object-fit:cover;display:block}
+.detail-gallery img:first-child{grid-column:1/-1;height:350px}
+.detail-gallery img:not(:first-child){height:220px}
+.detail-content{position:sticky;top:calc(var(--nav-h) + 2rem)}
+.detail-content p{color:var(--muted);line-height:1.85;font-size:.92rem;margin-bottom:1.5rem}
+.amenities{margin-top:2rem}
+.amenities-title{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--bronze);margin-bottom:1.2rem}
+.amenities-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.amenities-list li{font-size:.82rem;color:var(--muted);display:flex;align-items:center;gap:.6rem}
+.amenities-list li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--bronze);flex-shrink:0}
+.detail-cta{margin-top:2.5rem}
+
+/* ─── GALERÍA ─── */
+#galeria{background:var(--dark2);padding:7rem 4rem}
+.galeria-header{text-align:center;max-width:600px;margin:0 auto 4rem}
+.gallery-masonry{max-width:1300px;margin:0 auto;columns:3;column-gap:3px}
+.gallery-item{break-inside:avoid;margin-bottom:3px;overflow:hidden;cursor:pointer}
+.gallery-item img{width:100%;display:block;transition:transform .6s ease;filter:brightness(.9)}
+.gallery-item:hover img{transform:scale(1.04);filter:brightness(1)}
+
+/* ─── LIGHTBOX ─── */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;display:none;align-items:center;justify-content:center}
+.lightbox.active{display:flex}
+.lightbox img{max-width:90vw;max-height:90vh;object-fit:contain}
+.lightbox-close{position:absolute;top:2rem;right:2rem;background:none;border:none;color:#fff;cursor:pointer;font-family:'Jost',sans-serif;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.lightbox-close:hover{color:var(--bronze)}
+
+/* ─── TOUR VIRTUAL ─── */
+#tour{padding:7rem 4rem;text-align:center;background:var(--dark)}
+.tour-header{max-width:600px;margin:0 auto 3.5rem}
+.tour-frame{max-width:1100px;margin:0 auto;position:relative;background:var(--dark2);border:1px solid var(--border)}
+.tour-embed{aspect-ratio:16/9;border:none;width:100%}
+
+/* ─── CALENDARIO ─── */
+#reservas{padding:7rem 4rem;background:var(--dark2)}
+.reservas-inner{max-width:1000px;margin:0 auto}
+.reservas-header{text-align:center;margin-bottom:4rem}
+.calendar-container{background:var(--dark);border:1px solid var(--border);padding:2.5rem}
+.calendar-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem}
+.cal-month{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--cream)}
+.cal-nav-btn{background:none;border:1px solid var(--border);color:var(--muted);width:36px;height:36px;cursor:pointer;font-size:.9rem;transition:all .3s}
+.cal-nav-btn:hover{border-color:var(--bronze);color:var(--bronze)}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:.5rem}
+.cal-weekday{text-align:center;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:.5rem 0}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:.82rem;cursor:pointer;transition:all .2s;position:relative}
+.cal-day:not(.empty):not(.booked):hover{background:rgba(196,154,94,.15);color:var(--bronze)}
+.cal-day.today{color:var(--bronze);font-weight:500}
+.cal-day.booked{background:rgba(255,255,255,.04);color:rgba(255,255,255,.2);cursor:not-allowed;text-decoration:line-through}
+.cal-day.selected{background:var(--bronze);color:var(--dark);font-weight:500}
+.cal-day.in-range{background:rgba(196,154,94,.15);color:var(--bronze-light)}
+.cal-day.past{color:rgba(255,255,255,.15);cursor:not-allowed}
+.cal-legend{display:flex;gap:2rem;margin-top:1.5rem;justify-content:center;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+.legend-dot.available{background:rgba(196,154,94,.3)}
+.legend-dot.booked{background:rgba(255,255,255,.1)}
+.legend-dot.selected{background:var(--bronze)}
+
+/* ─── BOOKING FORM ─── */
+.booking-form{margin-top:3rem;background:var(--dark);border:1px solid var(--border);padding:2.5rem}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;margin-bottom:1.5rem;color:var(--cream)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.form-group{display:flex;flex-direction:column;gap:.5rem}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.form-input,.form-select,.form-textarea{background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--text);padding:.8rem 1rem;font-family:'Jost',sans-serif;font-size:.88rem;font-weight:300;outline:none;transition:border-color .3s;width:100%}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--bronze)}
+.form-select option{background:var(--dark);color:var(--text)}
+.form-textarea{resize:vertical;min-height:100px}
+.form-dates{display:flex;align-items:center;gap:1rem;padding:1rem;background:rgba(196,154,94,.08);border:1px solid var(--border);margin-bottom:1.5rem}
+.form-date-item{flex:1;text-align:center}
+.form-date-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.form-date-value{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--cream)}
+.form-date-sep{color:var(--border);font-size:1.5rem}
+.price-summary{background:rgba(196,154,94,.05);border:1px solid var(--border);padding:1.5rem;margin:1.5rem 0}
+.price-row{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);margin-bottom:.5rem}
+.price-total{display:flex;justify-content:space-between;font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--bronze-light);margin-top:.8rem;padding-top:.8rem;border-top:1px solid var(--border)}
+.payment-note{font-size:.72rem;color:var(--muted);text-align:center;margin-top:.8rem;line-height:1.6}
+
+/* ─── UBICACIÓN ─── */
+#ubicacion{padding:7rem 4rem;max-width:1300px;margin:0 auto}
+.ubicacion-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.ubicacion-distances{margin-top:2rem;display:flex;flex-direction:column;gap:1rem}
+.distance-item{display:flex;align-items:center;gap:1.2rem;padding:1rem 0;border-bottom:1px solid var(--border)}
+.distance-icon{font-size:1.2rem;width:36px;text-align:center;color:var(--bronze)}
+.distance-info{flex:1}
+.distance-name{font-size:.88rem;color:var(--cream);margin-bottom:.2rem}
+.distance-time{font-size:.72rem;letter-spacing:.1em;color:var(--muted)}
+.map-placeholder{aspect-ratio:4/3;background:var(--dark2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+
+/* ─── CONTACTO ─── */
+#contacto{background:var(--dark2);padding:7rem 4rem}
+.contacto-inner{max-width:700px;margin:0 auto;text-align:center}
+.contacto-form{text-align:left;margin-top:3rem}
+.success-msg{display:none;background:rgba(196,154,94,.1);border:1px solid var(--border);padding:1.5rem;text-align:center;color:var(--bronze);font-size:.88rem;margin-top:1rem}
+
+/* ─── FOOTER ─── */
+footer{background:var(--dark);border-top:1px solid var(--border);padding:3rem 4rem;display:grid;grid-template-columns:1fr 2fr 1fr;gap:3rem;align-items:start}
+.footer-brand img{height:44px;filter:brightness(1.1);margin-bottom:1rem}
+.footer-brand p{font-size:.78rem;color:var(--muted);line-height:1.7;max-width:220px}
+.footer-links{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.footer-col h4{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--bronze);margin-bottom:1rem}
+.footer-col a,.footer-col p{display:block;font-size:.8rem;color:var(--muted);text-decoration:none;margin-bottom:.5rem;line-height:1.5;transition:color .3s}
+.footer-col a:hover{color:var(--bronze)}
+.footer-bottom{grid-column:1/-1;border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;margin-top:1rem}
+.footer-bottom p{font-size:.72rem;color:var(--muted)}
+
+/* ─── ANIMATIONS ─── */
+@keyframes heroZoom{0%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes scrollPulse{0%,100%{opacity:.4;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1)}}
+
+/* ─── REVEAL ON SCROLL ─── */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ─── MOBILE NAV ─── */
+.mobile-nav{position:fixed;inset:0;background:rgba(13,13,11,.98);z-index:99;display:none;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.mobile-nav.open{display:flex}
+.mobile-nav a{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--text);text-decoration:none;transition:color .3s}
+.mobile-nav a:hover{color:var(--bronze)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+  #overview{grid-template-columns:1fr;gap:3rem;padding:5rem 2rem}
+  .overview-img{display:none}
+  .refugios-grid{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:1fr}
+  .detail-content{position:static}
+  .ubicacion-grid{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr;gap:2rem}
+}
+@media(max-width:768px){
+  nav{padding:0 1.5rem}
+  .nav-links{display:none}
+  .nav-hamburger{display:flex}
+  .hero-content{padding:0 1.5rem}
+  #overview,#refugios,#galeria,#tour,#reservas,#ubicacion,#contacto,footer{padding-left:1.5rem;padding-right:1.5rem}
+  .refugio-detail{padding:4rem 1.5rem}
+  .gallery-masonry{columns:2}
+  .form-grid{grid-template-columns:1fr}
+  .footer-links{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:.5rem;text-align:center}
+}
+@media(max-width:480px){
+  .gallery-masonry{columns:1}
+  .refugio-card img{height:400px}
+  .hero-title{font-size:2.6rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <img src="imagenes/logo.png" alt="Refugios San Luis">
+  </div>
+  <div class="nav-links">
+    <a href="#overview">El Proyecto</a>
+    <a href="#refugios">Los Refugios</a>
+    <a href="#galeria">Galería</a>
+    <a href="#tour">Tour Virtual</a>
+    <a href="#ubicacion">Ubicación</a>
+    <a href="#reservas" class="nav-cta">Reservar</a>
+  </div>
+  <div class="nav-hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#overview" onclick="closeMenu()">El Proyecto</a>
+  <a href="#refugios" onclick="closeMenu()">Los Refugios</a>
+  <a href="#galeria" onclick="closeMenu()">Galería</a>
+  <a href="#tour" onclick="closeMenu()">Tour Virtual</a>
+  <a href="#ubicacion" onclick="closeMenu()">Ubicación</a>
+  <a href="#reservas" onclick="closeMenu()">Reservar</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Malalcahuello · La Araucanía · Chile</p>
+    <h1 class="hero-title">Donde la montaña<br>se convierte en <em>hogar</em></h1>
+    <p class="hero-sub">Refugios de montaña premium a 10 minutos del centro de ski Corralco. Naturaleza, exclusividad y descanso absoluto.</p>
+    <div class="hero-btns">
+      <a href="#reservas" class="btn-primary">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5z"/></svg>
+        Reservar Ahora
+      </a>
+      <a href="#tour" class="btn-outline">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/></svg>
+        Ver Tour Virtual
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Explorar</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="overview-text reveal">
+    <p class="section-label">El Proyecto</p>
+    <h2 class="section-title">Un santuario en la<br>cordillera de <em>La Araucanía</em></h2>
+    <div class="divider"></div>
+    <p>Parcela privada de 5.000 m² ubicada a sólo 500 metros de la Ruta 181, rodeada de bosque nativo y con vistas al volcán Lonquimay. Dos refugios de montaña completamente equipados, diseñados para una experiencia premium en plena naturaleza.</p>
+    <p>Cada detalle ha sido pensado para el máximo confort: sistema de domótica integral, calefacción central, tinajas exteriores y acceso privilegiado a los mejores atractivos de la zona.</p>
+    <div class="overview-stats">
+      <div class="stat"><div class="stat-num">5.000</div><div class="stat-label">m² de parcela</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Refugios premium</div></div>
+      <div class="stat"><div class="stat-num">16</div><div class="stat-label">Huéspedes máx.</div></div>
+      <div class="stat"><div class="stat-num">10 km</div><div class="stat-label">Al centro de ski</div></div>
+    </div>
+  </div>
+  <div class="overview-img reveal">
+    <img src="imagenes/galeria-2.jpg" alt="Refugios San Luis">
+  </div>
+</section>
+
+<!-- LOS REFUGIOS (tarjetas) -->
+<section id="refugios">
+  <div class="refugios-header reveal">
+    <p class="section-label">Alojamiento</p>
+    <h2 class="section-title">Los <em>Refugios</em></h2>
+    <p style="color:var(--muted);font-size:.9rem;line-height:1.7">Dos refugios únicos, diseñados para brindar el máximo confort en plena naturaleza.</p>
+  </div>
+  <div class="refugios-grid">
+    <!-- Refugio 1 → IZQUIERDA -->
+    <div class="refugio-card reveal" onclick="document.getElementById('r1').scrollIntoView({behavior:'smooth'})">
+      <img src="imagenes/galeria-3.jpg" alt="Refugio 1">
+      <div class="refugio-info">
+        <p class="refugio-tag">Refugio Acogedor</p>
+        <h3 class="refugio-name">Refugio 1</h3>
+        <p class="refugio-cap">Hasta 6 personas · 2 dormitorios · 2 baños</p>
+        <div class="refugio-features">
+          <span class="feat-tag">Suite King</span>
+          <span class="feat-tag">Tinaja</span>
+          <span class="feat-tag">Quincho</span>
+          <span class="feat-tag">Bosca</span>
+          <span class="feat-tag">Domótica</span>
+        </div>
+      </div>
+    </div>
+    <!-- Refugio 2 → DERECHA -->
+    <div class="refugio-card reveal" onclick="document.getElementById('r2').scrollIntoView({behavior:'smooth'})">
+      <img src="imagenes/refugio-2-cama.jpg" alt="Refugio 2">
+      <div class="refugio-info">
+        <p class="refugio-tag">Refugio Premium</p>
+        <h3 class="refugio-name">Refugio 2</h3>
+        <p class="refugio-cap">Hasta 10 personas · 3 dormitorios · 3 baños</p>
+        <div class="refugio-features">
+          <span class="feat-tag">Suite King</span>
+          <span class="feat-tag">Tinaja</span>
+          <span class="feat-tag">Quincho</span>
+          <span class="feat-tag">Ski Room</span>
+          <span class="feat-tag">Domótica</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFUGIO 1 DETAIL (primero) -->
+<div id="r1" class="refugio-detail" style="background:var(--dark2);margin:0;padding:7rem 4rem;max-width:none">
+  <div style="max-width:1300px;margin:0 auto">
+    <div class="detail-grid">
+      <div class="detail-content reveal">
+        <p class="section-label">Refugio 1</p>
+        <h2 class="section-title">Intimidad perfecta<br>para <em>6 personas</em></h2>
+        <div class="divider"></div>
+        <p>Refugio de montaña íntimo y completamente equipado. Living con bosca a leña y sofá de cuero, cocina americana, y la mejor tinaja exterior para disfrutar las noches de montaña bajo las estrellas.</p>
+        <div class="amenities">
+          <p class="amenities-title">Características</p>
+          <ul class="amenities-list">
+            <li>1 suite con cama King</li>
+            <li>1 dorm. con 2 camas</li>
+            <li>2 baños completos</li>
+            <li>Calefacción central</li>
+            <li>Bosca a leña</li>
+            <li>Ventanas termopanel</li>
+            <li>Sistema domótica</li>
+            <li>Walking closet</li>
+            <li>Tinaja exterior</li>
+            <li>Quincho exterior</li>
+            <li>Logia</li>
+            <li>Cocina full equipada</li>
+          </ul>
+        </div>
+        <div class="detail-cta">
+          <a href="#reservas" class="btn-primary">Consultar Disponibilidad</a>
+        </div>
+      </div>
+      <div class="detail-gallery">
+        <img src="imagenes/galeria-1.jpg" alt="Tinaja Exterior Refugio 1" style="grid-column:1/-1;height:350px">
+        <img src="imagenes/galeria-3.jpg" alt="Sillón y alfombra Refugio 1" style="height:220px">
+        <img src="imagenes/galeria-4.jpg" alt="Living TV Refugio 1" style="height:220px">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REFUGIO 2 DETAIL (segundo) -->
+<div id="r2" class="refugio-detail">
+  <div class="detail-grid">
+    <div class="detail-gallery">
+      <img src="imagenes/refugio-2-cama.jpg" alt="Habitación cama Refugio 2" style="grid-column:1/-1;height:350px">
+      <img src="imagenes/refugio-2-camarotes.jpg" alt="Camarotes Refugio 2" style="height:220px">
+      <img src="imagenes/galeria-7.jpg" alt="Ski Room Refugio 2" style="height:220px">
+    </div>
+    <div class="detail-content reveal">
+      <p class="section-label">Refugio 2</p>
+      <h2 class="section-title">Lujo y comodidad<br>para <em>10 personas</em></h2>
+      <div class="divider"></div>
+      <p>Casa refugio de montaña full equipada con tres dormitorios, living comedor con sofá de cuero, cocina americana con isla y todos los elementos para una estadía de lujo. El dormitorio en suite con cama King cuenta con domótica completa.</p>
+      <div class="amenities">
+        <p class="amenities-title">Características</p>
+        <ul class="amenities-list">
+          <li>1 suite con cama King</li>
+          <li>2 dorm. con 4 camas c/u</li>
+          <li>3 baños completos</li>
+          <li>Calefacción central</li>
+          <li>Bosca a leña</li>
+          <li>Aire frío/calor</li>
+          <li>Ventanas termopanel</li>
+          <li>Sistema domótica</li>
+          <li>Ski Room equipado</li>
+          <li>Tinaja exterior</li>
+          <li>Quincho exterior</li>
+          <li>Cocina full equipada</li>
+        </ul>
+      </div>
+      <div class="detail-cta">
+        <a href="#reservas" class="btn-primary">Consultar Disponibilidad</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GALERÍA -->
+<section id="galeria">
+  <div class="galeria-header reveal">
+    <p class="section-label">Galería</p>
+    <h2 class="section-title">Cada rincón,<br>una <em>experiencia</em></h2>
+  </div>
+  <div class="gallery-masonry">
+    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-1.jpg')">
+      <img src="imagenes/galeria-1.jpg" alt="Tinaja exterior">
+    </div>
+    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-2.jpg')">
+      <img src="imagenes/galeria-2.jpg" alt="Exterior refugio">
+    </div>
+    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-3.jpg')">
+      <img src="imagenes/galeria-3.jpg" alt="Sillón y alfombra">
+    </div>
+    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-4.jpg')">
+      <img src="imagenes/galeria-4.jpg" alt="TV y mármol living">
+    </div>
+    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-5.jpg')">
+      <img src="imagenes/galeria-5.jpg" alt="Detalle sillón">
+    </div>
+    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-6.jpg')">
+      <img src="imagenes/galeria-6.jpg" alt="Living comedor Refugio 2">
+    </div>
+    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-7.jpg')">
+      <img src="imagenes/galeria-7.jpg" alt="Ski room Refugio 2">
+    </div>
+    <div class="gallery-item" onclick="openLightbox('imagenes/galeria-8.jpg')">
+      <img src="imagenes/galeria-8.jpg" alt="Espejo habitación">
+    </div>
+    <div class="gallery-item" onclick="openLightbox('imagenes/refugio-2-cama.jpg')">
+      <img src="imagenes/refugio-2-cama.jpg" alt="Habitación cama Refugio 2">
+    </div>
+    <div class="gallery-item" onclick="openLightbox('imagenes/refugio-2-camarotes.jpg')">
+      <img src="imagenes/refugio-2-camarotes.jpg" alt="Camarotes Refugio 2">
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">✕ Cerrar</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- TOUR VIRTUAL -->
+<section id="tour">
+  <div class="tour-header reveal">
+    <p class="section-label">Tour Virtual</p>
+    <h2 class="section-title">Recorre los refugios<br>desde donde <em>estés</em></h2>
+    <p style="color:var(--muted);font-size:.9rem;line-height:1.7">Vive la experiencia completa antes de llegar. Nuestro tour virtual 360° te permite explorar cada rincón de los refugios.</p>
+  </div>
+  <div class="tour-frame reveal">
+    <iframe id="tour-embeded" name="Refugios San Luis" src="https://tour.panoee.net/iframe/69dac5fc4cc6364bce1517ad" frameBorder="0" width="100%" height="400px" scrolling="no" allowvr="yes" allow="vr; xr; accelerometer; gyroscope; autoplay;" allowFullScreen="false" webkitallowfullscreen="false" mozallowfullscreen="false" loading="eager" style="display:block"></iframe>
+    <script>
+    var pano_iframe_name = "tour-embeded";
+    window.addEventListener("devicemotion", function(e){ var iframe = document.getElementById(pano_iframe_name); if (iframe) iframe.contentWindow.postMessage({ type:"devicemotion", deviceMotionEvent:{ acceleration:{ x:e.acceleration.x, y:e.acceleration.y, z:e.acceleration.z }, accelerationIncludingGravity:{ x:e.accelerationIncludingGravity.x, y:e.accelerationIncludingGravity.y, z:e.accelerationIncludingGravity.z }, rotationRate:{ alpha:e.rotationRate.alpha, beta:e.rotationRate.beta, gamma:e.rotationRate.gamma }, interval:e.interval, timeStamp:e.timeStamp } }, "*"); });
+    </script>
+  </div>
+</section>
+
+<!-- RESERVAS -->
+<section id="reservas">
+  <div class="reservas-inner">
+    <div class="reservas-header reveal">
+      <p class="section-label">Disponibilidad y Reservas</p>
+      <h2 class="section-title">Elige tus <em>fechas</em></h2>
+      <p style="color:var(--muted);font-size:.9rem">Selecciona las fechas en el calendario y completa el formulario de reserva</p>
+    </div>
+    <div class="calendar-container reveal">
+      <div class="calendar-nav">
+        <button class="cal-nav-btn" onclick="prevMonth()">&#8592;</button>
+        <div class="cal-month" id="calMonth"></div>
+        <button class="cal-nav-btn" onclick="nextMonth()">&#8594;</button>
+      </div>
+      <div class="cal-weekdays">
+        <div class="cal-weekday">Lu</div><div class="cal-weekday">Ma</div>
+        <div class="cal-weekday">Mi</div><div class="cal-weekday">Ju</div>
+        <div class="cal-weekday">Vi</div><div class="cal-weekday">Sá</div>
+        <div class="cal-weekday">Do</div>
+      </div>
+      <div class="cal-days" id="calDays"></div>
+      <div class="cal-legend">
+        <div class="legend-item"><div class="legend-dot available"></div><span>Disponible</span></div>
+        <div class="legend-item"><div class="legend-dot selected"></div><span>Seleccionado</span></div>
+        <div class="legend-item"><div class="legend-dot booked"></div><span>Reservado</span></div>
+      </div>
+    </div>
+
+    <div class="booking-form reveal">
+      <h3 class="form-title">Completa tu Reserva</h3>
+      <div class="form-dates" id="formDates">
+        <div class="form-date-item">
+          <div class="form-date-label">Llegada</div>
+          <div class="form-date-value" id="dateIn">—</div>
+        </div>
+        <div class="form-date-sep">→</div>
+        <div class="form-date-item">
+          <div class="form-date-label">Salida</div>
+          <div class="form-date-value" id="dateOut">—</div>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Refugio</label>
+          <select class="form-select" id="refugioSelect" onchange="updatePrice()">
+            <option value="">Seleccionar...</option>
+            <option value="r2">Refugio 2 – hasta 10 personas</option>
+            <option value="r1">Refugio 1 – hasta 6 personas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">N° de huéspedes</label>
+          <select class="form-select" id="guests">
+            <option>1-2</option><option>3-4</option><option>5-6</option>
+            <option>7-8</option><option>9-10</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nombre completo</label>
+          <input type="text" class="form-input" id="nombre" placeholder="Tu nombre">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correo electrónico</label>
+          <input type="email" class="form-input" id="email" placeholder="tu@correo.cl">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Teléfono</label>
+          <input type="tel" class="form-input" id="telefono" placeholder="+56 9 XXXX XXXX">
+        </div>
+        <div class="form-group">
+          <label class="form-label">RUT (para facturación)</label>
+          <input type="text" class="form-input" id="rut" placeholder="12.345.678-9">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Comentarios o solicitudes especiales</label>
+          <textarea class="form-textarea" id="comentarios" placeholder="¿Alguna petición especial? Alergias, celebraciones, etc."></textarea>
+        </div>
+      </div>
+      <div class="price-summary" id="priceSummary" style="display:none">
+        <div class="price-row"><span>Tarifa por noche</span><span id="priceNight">—</span></div>
+        <div class="price-row"><span>Noches</span><span id="priceNights">—</span></div>
+        <div class="price-row"><span>Limpieza</span><span>$80.000</span></div>
+        <div class="price-total"><span>Total</span><span id="priceTotal">—</span></div>
+        <p class="payment-note">Pago seguro vía Mercado Pago o Webpay (Transbank). Se requiere 50% al reservar y saldo al check-in.</p>
+      </div>
+      <button class="btn-primary" onclick="submitReservation()" style="width:100%;justify-content:center;padding:1.1rem">
+        Confirmar Reserva y Pagar
+      </button>
+      <p style="font-size:.72rem;color:var(--muted);text-align:center;margin-top:1rem;line-height:1.6">Al confirmar recibirás un correo con los detalles de tu reserva. El pago es 100% seguro.</p>
+    </div>
+  </div>
+</section>
+
+<!-- UBICACIÓN -->
+<section id="ubicacion">
+  <div class="ubicacion-grid">
+    <div class="reveal">
+      <p class="section-label">Ubicación</p>
+      <h2 class="section-title">En el corazón de<br>la <em>Araucanía</em></h2>
+      <div class="divider"></div>
+      <p style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-bottom:1rem">Ruta 181, sector Lonquimay, La Araucanía. A 500m de la ruta principal, rodeados de bosque nativo con vistas al volcán.</p>
+      <div class="ubicacion-distances">
+        <div class="distance-item">
+          <span class="distance-icon">⛷</span>
+          <div class="distance-info">
+            <div class="distance-name">Centro de ski Corralco</div>
+            <div class="distance-time">10 minutos en auto</div>
+          </div>
+        </div>
+        <div class="distance-item">
+          <span class="distance-icon">♨</span>
+          <div class="distance-info">
+            <div class="distance-name">Termas de Malalcahuello</div>
+            <div class="distance-time">15 minutos en auto</div>
+          </div>
+        </div>
+        <div class="distance-item">
+          <span class="distance-icon">🛒</span>
+          <div class="distance-info">
+            <div class="distance-name">Supermercado y servicios</div>
+            <div class="distance-time">Cercano al pueblo</div>
+          </div>
+        </div>
+        <div class="distance-item">
+          <span class="distance-icon">🌋</span>
+          <div class="distance-info">
+            <div class="distance-name">Volcán Lonquimay</div>
+            <div class="distance-time">Vistas desde la parcela</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="map-placeholder reveal" style="position:relative;overflow:hidden;">
+      <iframe
+        src="https://maps.google.com/maps?q=-38.6583,-71.5167&z=15&output=embed"
+        width="100%" height="100%" style="border:0;min-height:400px;filter:grayscale(1) contrast(.8)"
+        allowfullscreen="" loading="lazy">
+      </iframe>
+      <a href="https://maps.app.goo.gl/fXgYejJqdcaBpVkNA" target="_blank" rel="noopener"
+         style="position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--bronze);color:var(--dark);padding:.65rem 1.6rem;font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:all .3s;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.4)">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+        Abrir en Google Maps
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="contacto-inner reveal">
+    <p class="section-label">Contacto</p>
+    <h2 class="section-title">¿Tienes <em>preguntas</em>?</h2>
+    <div class="divider" style="margin:0 auto 1.5rem"></div>
+    <p style="color:var(--muted);line-height:1.8;font-size:.9rem">Nuestro equipo está disponible para resolver todas tus dudas y ayudarte a planificar la estadía perfecta.</p>
+    <div class="contacto-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-input" id="c-nombre" placeholder="Tu nombre">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correo electrónico</label>
+          <input type="email" class="form-input" id="c-email" placeholder="tu@correo.cl">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Mensaje</label>
+          <textarea class="form-textarea" id="c-msg" placeholder="¿En qué podemos ayudarte?" style="min-height:140px"></textarea>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="submitContact()" style="width:100%;justify-content:center;padding:1rem;margin-top:1rem">Enviar Mensaje</button>
+      <div class="success-msg" id="contactSuccess">
+        ✓ Mensaje enviado correctamente. Te responderemos a la brevedad.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <img src="imagenes/logo.png" alt="Refugios San Luis">
+    <p>Refugios de montaña premium en La Araucanía, Chile. Naturaleza, confort y exclusividad.</p>
+  </div>
+  <div class="footer-links">
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <a href="#overview">El Proyecto</a>
+      <a href="#refugios">Los Refugios</a>
+      <a href="#galeria">Galería</a>
+      <a href="#tour">Tour Virtual</a>
+      <a href="#reservas">Reservas</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <p>reservas@refugiossanluis.cl</p>
+      <p>Malalcahuello, La Araucanía</p>
+      <p>Ruta 181, Chile</p>
+      <br>
+      <a href="#reservas">Reservar ahora →</a>
+    </div>
+  </div>
+  <div></div>
+  <div class="footer-bottom">
+    <p>© 2025 Refugios San Luis. Todos los derechos reservados.</p>
+    <p>Diseñado con amor por la montaña.</p>
+  </div>
+</footer>
+
+<script>
+// ─── NAV SCROLL ───
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50)
+})
+
+// ─── MOBILE MENU ───
+function toggleMenu(){document.getElementById('mobileNav').classList.toggle('open')}
+function closeMenu(){document.getElementById('mobileNav').classList.remove('open')}
+
+// ─── REVEAL ON SCROLL ───
+const reveals=document.querySelectorAll('.reveal')
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})
+},{threshold:.1})
+reveals.forEach(r=>observer.observe(r))
+
+// ─── LIGHTBOX ───
+function openLightbox(src){
+  document.getElementById('lightbox-img').src=src
+  document.getElementById('lightbox').classList.add('active')
+  document.body.style.overflow='hidden'
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('active')
+  document.body.style.overflow=''
+}
+
+// ─── CALENDAR ───
+let currentDate=new Date(),selectedStart=null,selectedEnd=null
+const bookedDates=['2025-07-15','2025-07-16','2025-07-17','2025-07-18','2025-07-19','2025-07-20','2025-08-01','2025-08-02','2025-08-03']
+
+function formatDate(d){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
+}
+function displayDate(d){
+  if(!d)return '—'
+  return d.toLocaleDateString('es-CL',{day:'numeric',month:'short'})
+}
+
+function renderCalendar(){
+  const year=currentDate.getFullYear(),month=currentDate.getMonth()
+  const months=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+  document.getElementById('calMonth').textContent=`${months[month]} ${year}`
+
+  const firstDay=new Date(year,month,1).getDay()
+  const adjustedFirst=(firstDay===0?6:firstDay-1)
+  const daysInMonth=new Date(year,month+1,0).getDate()
+  const today=new Date()
+
+  let html=''
+  for(let i=0;i<adjustedFirst;i++) html+='<div class="cal-day empty"></div>'
+
+  for(let d=1;d<=daysInMonth;d++){
+    const date=new Date(year,month,d)
+    const dateStr=formatDate(date)
+    const isToday=date.toDateString()===today.toDateString()
+    const isPast=date<today && !isToday
+    const isBooked=bookedDates.includes(dateStr)
+    const isSelected=selectedStart&&formatDate(selectedStart)===dateStr||selectedEnd&&formatDate(selectedEnd)===dateStr
+    const isInRange=selectedStart&&selectedEnd&&date>selectedStart&&date<selectedEnd
+
+    let cls='cal-day'
+    if(isPast)cls+=' past'
+    else if(isBooked)cls+=' booked'
+    else if(isSelected)cls+=' selected'
+    else if(isInRange)cls+=' in-range'
+    if(isToday)cls+=' today'
+
+    const clickable=!isPast&&!isBooked
+    html+=`<div class="${cls}" ${clickable?`onclick="selectDay(${year},${month},${d})"`:''} >${d}</div>`
+  }
+  document.getElementById('calDays').innerHTML=html
+
+  document.getElementById('dateIn').textContent=displayDate(selectedStart)
+  document.getElementById('dateOut').textContent=displayDate(selectedEnd)
+  updatePrice()
+}
+
+function selectDay(y,m,d){
+  const date=new Date(y,m,d)
+  if(!selectedStart||selectedEnd||(selectedStart&&date<selectedStart)){
+    selectedStart=date;selectedEnd=null
+  } else {
+    selectedEnd=date
+  }
+  renderCalendar()
+}
+
+function prevMonth(){currentDate.setMonth(currentDate.getMonth()-1);renderCalendar()}
+function nextMonth(){currentDate.setMonth(currentDate.getMonth()+1);renderCalendar()}
+
+// ─── PRICING ───
+const prices={r2:250000,r1:180000}
+function updatePrice(){
+  const ref=document.getElementById('refugioSelect').value
+  const ps=document.getElementById('priceSummary')
+  if(!ref||!selectedStart||!selectedEnd){ps.style.display='none';return}
+
+  const nights=Math.round((selectedEnd-selectedStart)/(1000*60*60*24))
+  const nightly=prices[ref]
+  const subtotal=nightly*nights
+  const cleaning=80000
+  const total=subtotal+cleaning
+
+  document.getElementById('priceNight').textContent=`$${nightly.toLocaleString('es-CL')}`
+  document.getElementById('priceNights').textContent=nights
+  document.getElementById('priceTotal').textContent=`$${(total).toLocaleString('es-CL')}`
+  ps.style.display='block'
+}
+
+// ─── RESERVATION ───
+function submitReservation(){
+  const nombre=document.getElementById('nombre').value
+  const email=document.getElementById('email').value
+  const ref=document.getElementById('refugioSelect').value
+
+  if(!nombre||!email||!ref||!selectedStart||!selectedEnd){
+    alert('Por favor completa todos los campos y selecciona fechas.')
+    return
+  }
+
+  const body={
+    nombre,email,
+    telefono:document.getElementById('telefono').value,
+    rut:document.getElementById('rut').value,
+    refugio:ref==='r2'?'Refugio 2':'Refugio 1',
+    llegada:formatDate(selectedStart),
+    salida:formatDate(selectedEnd),
+    huespedes:document.getElementById('guests').value,
+    comentarios:document.getElementById('comentarios').value
+  }
+
+  alert(`✓ Reserva recibida. ${nombre}, recibirás un correo en ${email} con los detalles y el enlace de pago.\n\nProximamente integración con Mercado Pago/Webpay.`)
+}
+
+// ─── CONTACT ───
+function submitContact(){
+  const n=document.getElementById('c-nombre').value
+  const e=document.getElementById('c-email').value
+  const m=document.getElementById('c-msg').value
+  if(!n||!e||!m){alert('Por favor completa todos los campos.');return}
+
+  document.getElementById('contactSuccess').style.display='block'
+  document.getElementById('c-nombre').value=''
+  document.getElementById('c-email').value=''
+  document.getElementById('c-msg').value=''
+}
+
+renderCalendar()
+</script>
+</body>
+</html>
